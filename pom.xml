@@ -1,0 +1,56 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.andreamazzon</groupId>
+  <artifactId>Numerical-methods-exercises-2021</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  
+  <properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<!-- maven plugins -->
+		<compiler-plugin.version>3.8.1</compiler-plugin.version>
+		<junit.jupiter.version>5.6.2</junit.jupiter.version>
+	</properties>
+  
+  <dependencies>
+		<dependency>
+			<groupId>net.finmath</groupId>
+			<artifactId>finmath-lib</artifactId>
+			<version>5.0.10-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>com.andreamazzon</groupId>
+			<artifactId>javacourse-2021</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>net.finmath</groupId>
+			<artifactId>finmath-lib-plot-extensions</artifactId>
+			<version>0.3.7</version>
+		</dependency>
+		<dependency>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter</artifactId>
+			<version>${junit.jupiter.version}</version>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+  
+  <build>
+		<plugins>
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>${compiler-plugin.version}</version>
+				<configuration>
+					<release>11</release>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-checkstyle-plugin</artifactId>
+				<configuration>
+					<configLocation>finmath-checkstyle.xml</configLocation>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+</project>

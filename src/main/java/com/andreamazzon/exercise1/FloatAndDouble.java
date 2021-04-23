@@ -42,8 +42,12 @@ public class FloatAndDouble {
 		 * We create this class because epsilon is a double and exponent int, and we
 		 * cannot have an array with different types. Two different ways to do this
 		 * could be: - upcast exponent to double - create and return an
-		 * ArrayList<Object>
+		 * ArrayList<Object>, for example:
 		 */
+		// ArrayList<Object> epsilonAndExponent = new ArrayList<Object>();
+		// epsilonAndExponent.add(epsilon);
+		// epsilonAndExponent.add(exponent);
+
 		EpsilonAndExponent epsilonAndExponent = new EpsilonAndExponent();
 		// we set the values of the epsilon and exponent field of the class
 		epsilonAndExponent.setEpsilon(epsilon);
@@ -58,10 +62,11 @@ public class FloatAndDouble {
 		System.out.println("The statement xFloat=x0 is " + (xFloat == x0));
 
 		EpsilonAndExponent epsilonAndExponentWithFloat = computeBiggestEpsilon(xFloat, x0);
+
 		double epsilonWithFloat = epsilonAndExponentWithFloat.getEpsilon();
 		int exponentWithFloat = epsilonAndExponentWithFloat.getExponent();
 
-		System.out.println("The smallest power n such that |xFloat-x0|<=2^(-n) is  " + exponentWithFloat
+		System.out.println("The smallest power n such that |xFloat-x0|>=2^(-n) is " + exponentWithFloat
 				+ " , for which 2^(-n) equals " + epsilonWithFloat);
 
 		System.out.println();
@@ -72,7 +77,7 @@ public class FloatAndDouble {
 		double epsilonWithDouble = epsilonAndExponentWithDouble.getEpsilon();
 		int exponentWithDouble = epsilonAndExponentWithDouble.getExponent();
 
-		System.out.println("The smallest power n such that |xDouble-x0|<=2^(-n) is  " + exponentWithDouble
+		System.out.println("The smallest power n such that |xDouble-x0|>=2^(-n) is " + exponentWithDouble
 				+ " , for which 2^(-n) equals " + epsilonWithDouble);
 	}
 

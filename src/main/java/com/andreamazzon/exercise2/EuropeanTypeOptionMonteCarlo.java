@@ -6,7 +6,7 @@ import com.andreamazzon.session5.abstractclasses.simulators.StochasticProcessSim
  * This interface deals with an European type option (i.e., an option that
  * depends only on the values of the process at maturity time) whose underlying
  * is a discrete process the realizations of which are represented by an object
- * of type StochasticProcessSimulator.
+ * of type StochasticProcessSimulatorInterface.
  *
  * @author Andrea Mazzon
  *

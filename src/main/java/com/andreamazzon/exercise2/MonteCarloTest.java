@@ -19,15 +19,24 @@ public class MonteCarloTest {
 		double initialValue = 100;
 		double increaseIfUp = 1.5;
 		double decreaseIfDown = 0.5;
-		int lastTime = 7;
+		int lastTime = 10;
 		int numberOfSimulations = 100000;
+		int specifiedSeed = 1897;
 		// threshold for the option
 		double threshold = 100;
 		// maturity for the option
 		int maturityIndex = lastTime;// the time is discrete, the time and the index coincide
 
-		// CALL THE CONSTRUCTOR OF YOUR CLASS HERE
-		MonteCarloExperiments monteCarloWithBinomial = null;
+		MonteCarloExperimentsWithBinomialModel monteCarloWithBinomial = new MonteCarloExperimentsWithBinomialModel(
+				initialValue, increaseIfUp, decreaseIfDown, lastTime, numberOfSimulations, threshold, maturityIndex);
+
+		// for now, we give the seed. This is basically the test for exercise 1
+		double priceWithGivenSeed = monteCarloWithBinomial.getPriceForGivenSeed(specifiedSeed);
+
+		System.out.println("The price of the digital option with seed equal to " + specifiedSeed + " and "
+				+ numberOfSimulations + " simulations is " + priceWithGivenSeed);
+
+		System.out.println("_".repeat(90) + "\n");
 
 		// now we see what happens when we compute some prices for different seeds
 		int numberOfPriceComputations = 100;
@@ -57,16 +66,23 @@ public class MonteCarloTest {
 		double binSize = (maxPrice - minPrice) / numberOfBins;
 
 		/*
-		 * The first entry of histogram given by prices smaller than the min: not
-		 * possible, that's why we start from the second entry
+		 * The first entry of histogram given by prices smaller than the min: in our
+		 * case this number will be zero because we set the left end of the interval to
+		 * be the smallest price we get. So basically, we have not the small outliers,
+		 * that are stored in the first entry of the array. For this reason, we start
+		 * from the second entry. Same thing for the right end of the interval: we have
+		 * no big outliers, so we can also stop to the second last entry of the array.
+		 * However, the last entry of the array contains the number of realizations
+		 * bigger or EQUAL to the right end of the interval. So it must be one. We want
+		 * to check that, so we print as well.
 		 */
 		for (int i = 1; i < histogram.length; i++) {
 			System.out.println("The price has been " + histogram[i] + " times between "
-					+ formatterDouble.format((i - 1) * binSize + minPrice) + " and "
-					+ formatterDouble.format(i * binSize + minPrice));
+					+ formatterDouble.format((i - 1) * binSize + minPrice) + " included and "
+					+ formatterDouble.format(i * binSize + minPrice) + " excluded");
 		}
 
-		System.out.println();
+		System.out.println("_".repeat(90) + "\n");
 
 		System.out.println(
 				"Now we see how the number of simulations of the process affects the accuracy of the results:");

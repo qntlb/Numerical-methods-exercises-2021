@@ -1,4 +1,4 @@
-package com.andreamazzon.exercise3.montecarlopi;
+package com.andreamazzon.exercise3.alternative;
 
 import java.text.DecimalFormat;
 import java.util.Arrays;

@@ -67,7 +67,7 @@ public class MonteCarloPiCheck {
 
 		numberOfDrawings = 10;
 
-		while (numberOfDrawings <= 10000000) {
+		while (numberOfDrawings <= 1000000) {
 			MonteCarloPi newSimulator = new MonteCarloPi(numberOfIntegrations, numberOfDrawings);
 			/*
 			 * you want to be sure that the array of the approximations has same length as

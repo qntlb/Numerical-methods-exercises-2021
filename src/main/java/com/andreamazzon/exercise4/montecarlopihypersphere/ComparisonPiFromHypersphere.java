@@ -17,7 +17,7 @@ public class ComparisonPiFromHypersphere {
 
 		int numberOfIntegrations = 100;// number of Monte Carlo executions
 		int numberOfSamplePoints = 100000;
-		int dimension = 3;
+		int dimension = 476;
 
 		MonteCarloPiFromHypersphere monteCarlo = new MonteCarloPiFromHypersphere(numberOfIntegrations,
 				numberOfSamplePoints, dimension);
@@ -32,7 +32,7 @@ public class ComparisonPiFromHypersphere {
 		System.out.println("Average of the errors in the computation of Pi with " + numberOfSamplePoints
 				+ " sample points and dimension " + dimension + " by the Monte-Carlo method: " + averageAbsoluteError);
 		// now we sample the points with the Halton sequence:
-		int[] base = { 2, 3, 5 };
+		int[] base = { 2, 3, 5, 7 };
 
 		HaltonSequencePiFromHypersphere haltonSequencePi = new HaltonSequencePiFromHypersphere(numberOfSamplePoints,
 				base);

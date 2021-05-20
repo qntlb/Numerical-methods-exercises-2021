@@ -56,7 +56,7 @@ public class VanDerCorputSequence {
 	 */
 	public static double[] getVanDerCorputSequence(int n, int base) {
 		double[] sequence = new double[n];
-		for (int i = 0; i <= n; i++) {
+		for (int i = 0; i < n; i++) {
 			sequence[i] = getVanDerCorputNumber(i, base);
 		}
 		return sequence;

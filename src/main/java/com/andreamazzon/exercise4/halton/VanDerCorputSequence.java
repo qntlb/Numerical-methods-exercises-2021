@@ -50,12 +50,12 @@ public class VanDerCorputSequence {
 	}
 
 	/**
-	 * @param maxIndex The length of the sequence starting with 0
-	 * @param base     The base.
+	 * @param n    The length of the sequence
+	 * @param base The base.
 	 * @return The van der Corput sequence up to the index n
 	 */
 	public static double[] getVanDerCorputSequence(int n, int base) {
-		double[] sequence = new double[n + 1];
+		double[] sequence = new double[n];
 		for (int i = 0; i <= n; i++) {
 			sequence[i] = getVanDerCorputNumber(i, base);
 		}

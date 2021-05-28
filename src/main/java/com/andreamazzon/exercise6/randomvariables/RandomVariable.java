@@ -22,7 +22,7 @@ public abstract class RandomVariable implements RandomVariableInterface {
 		 * F^(-1)(U) with U uniformly distributed in (0,1)) and F^(-1) defined as
 		 * F^(-1)(y) := inf{x|F(x) >= y} has cumulative distribution function F. F^(-1)
 		 * is here the quantile function of the random variable. The implementation of
-		 * quantileFunction(double x) will be given in the classes extending this
+		 * getQuantileFunction(double x) will be given in the classes extending this
 		 * abstract one, since of course it depends on the specific distribution.
 		 */
 		return getQuantileFunction(Math.random());// X_i
@@ -41,6 +41,20 @@ public abstract class RandomVariable implements RandomVariableInterface {
 		}
 	}
 
+//	/*
+//	 * This method initializes randomVariableRealizations to be a one-dimensional
+//	 * array of the given length n, and it fills it by calling generate() n times.
+//	 * It is used to compute the mean and the standard deviation of a sample of
+//	 * independent realizations of the random variable.
+//	 */
+//	private double[] generateValues(int n) {
+//		double[] randomVariableRealizations = new double[n];
+//		for (int i = 0; i < n; i++) {
+//			randomVariableRealizations[i] = generate();// generation of the new realization
+//		}
+//		return randomVariableRealizations;
+//	}
+
 	@Override
 	public double getSampleMean(int n) {
 		/*
@@ -53,6 +67,19 @@ public abstract class RandomVariable implements RandomVariableInterface {
 		double mean = UsefulMethodsMatricesAndVectors.getAverage(randomVariableRealizations);
 		return mean;
 	}
+
+//	@Override
+//	public double getSampleMean(int n) {
+//		/*
+//		 * the method might be called more than once, obtaining different results. So
+//		 * every time the method is called we call generateValues(n), that is supposed
+//		 * to give different values to the one-dimensional array
+//		 * randomVariableRealizations every time is called.
+//		 */
+//		generateValues(n);
+//		double mean = UsefulMethodsMatricesAndVectors.getAverage(generateValues(n));
+//		return mean;
+//	}
 
 	@Override
 	public double getSampleStdDeviation(int n) {

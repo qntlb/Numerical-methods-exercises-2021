@@ -19,12 +19,12 @@ public class RandomVariableTesting {
 		System.out.println();
 
 		System.out.println("Sample mean: " + exponentialSampler.getSampleMean(numberOfSimulations));
-		System.out.println("Mu: " + exponentialSampler.getAnalyticMean());
+		System.out.println("Analytic mean: " + exponentialSampler.getAnalyticMean());
 
 		System.out.println();
 
 		System.out.println("Sample std dev: " + exponentialSampler.getSampleStdDeviation(numberOfSimulations));
-		System.out.println("Sigma: " + exponentialSampler.getAnalyticStdDeviation());
+		System.out.println("Analytic std dev: " + exponentialSampler.getAnalyticStdDeviation());
 
 		System.out.println();
 

@@ -1,5 +1,7 @@
 package com.andreamazzon.exercise7.confidenceintervals;
 
+import java.text.DecimalFormat;
+
 import com.andreamazzon.exercise6.randomvariables.ExponentialRandomVariable;
 import com.andreamazzon.exercise6.randomvariables.RandomVariable;
 
@@ -12,14 +14,18 @@ import com.andreamazzon.exercise6.randomvariables.RandomVariable;
  */
 public class ConfidenceIntervalsTesting {
 
+	static DecimalFormat formatterValue = new DecimalFormat("#0.00000");
+
+	static DecimalFormat formatterPercentage = new DecimalFormat("#0.00%");
+
 	public static void main(String[] args) {
 		double lambda = 0.2;
 		int numberOfMeanComputations = 10000;
 		int sampleSize = 100000;
 		double confidenceLevel = 0.9;
 		/*
-		 * exponentially distributed random variable: we want to compute the confidence
-		 * intervals of its sample mean for a sample size given by sampleSize.
+		 * exponentially distributed random variables: we want to compute the confidence
+		 * intervals for the sample mean of size given by sampleSize.
 		 */
 		RandomVariable exponential = new ExponentialRandomVariable(lambda);
 		// with Chebychev inequality
@@ -30,20 +36,31 @@ public class ConfidenceIntervalsTesting {
 
 		System.out.println("The Chebyshev confidence interval boundaries at a " + confidenceLevel * 100
 				+ "% confidence level  for lambda  after " + sampleSize + " drawings are \n"
-				+ chebychevInterval.getLowerBoundConfidenceInterval(confidenceLevel) + " and "
-				+ chebychevInterval.getUpperBoundConfidenceInterval(confidenceLevel));
+				+ formatterValue.format(chebychevInterval.getLowerBoundConfidenceInterval(confidenceLevel)) + " and "
+				+ formatterValue.format(chebychevInterval.getUpperBoundConfidenceInterval(confidenceLevel)));
 
+		System.out.println("\n");
+		System.out.println("_".repeat(80) + "\n");
 		System.out.println("\n");
 
 		System.out.println("The CLT confidence interval boundaries at a " + confidenceLevel * 100
 				+ "% confidence level for lambda after " + sampleSize + " drawings are \n"
-				+ cLTInterval.getLowerBoundConfidenceInterval(confidenceLevel) + " and "
-				+ cLTInterval.getUpperBoundConfidenceInterval(confidenceLevel));
+				+ formatterValue.format(cLTInterval.getLowerBoundConfidenceInterval(confidenceLevel)) + " and "
+				+ formatterValue.format(cLTInterval.getUpperBoundConfidenceInterval(confidenceLevel)));
 
-		System.out.println("The frequence of lambda being in the Chebyshev  confidence interval" + "is "
-				+ chebychevInterval.frequenceOfInterval(numberOfMeanComputations, confidenceLevel) * 100 + "%");
+		System.out.println("\n");
+		System.out.println("_".repeat(80) + "\n");
+
+		System.out.println("\n");
+
+		System.out
+				.println("The frequence of lambda being in the Chebyshev  confidence interval" + "is "
+						+ formatterPercentage.format(
+								chebychevInterval.frequenceOfInterval(numberOfMeanComputations, confidenceLevel))
+						+ "%");
 		System.out.println("The frequence of lambda being in the CLT confidence interval is "
-				+ cLTInterval.frequenceOfInterval(numberOfMeanComputations, confidenceLevel) * 100 + "%");
+				+ formatterPercentage.format(cLTInterval.frequenceOfInterval(numberOfMeanComputations, confidenceLevel))
+				+ "%");
 
 	}
 }

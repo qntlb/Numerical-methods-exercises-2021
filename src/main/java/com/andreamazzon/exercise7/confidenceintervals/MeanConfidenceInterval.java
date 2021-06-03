@@ -24,9 +24,27 @@ public abstract class MeanConfidenceInterval {
 	 * two abstract methods. The confidence interval is specific of the limit
 	 * theorem used to compute it.
 	 */
-	public abstract double getLowerBoundConfidenceInterval(double level);
+	/**
+	 * It computes the lower bound of the confidence interval of level
+	 * confidenceLevel for the mean of a sample of random variables whose size is
+	 * specified by the field sampleSize.
+	 *
+	 * @param confidenceLevel, the confidence level of the interval: we want that
+	 *                         P(mean in interval) >= confidenceLevel
+	 * @return the lower bound of the confidence interval
+	 */
+	public abstract double getLowerBoundConfidenceInterval(double confidenceLevel);
 
-	public abstract double getUpperBoundConfidenceInterval(double level);
+	/**
+	 * It computes the upper bound of the confidence interval of level
+	 * confidenceLevel for the mean of a sample of random variables whose size is
+	 * specified by the field sampleSize.
+	 *
+	 * @param confidenceLevel, the confidence level of the interval: we want that
+	 *                         P(mean in interval) >= confidenceLevel
+	 * @return the lower bound of the confidence interval
+	 */
+	public abstract double getUpperBoundConfidenceInterval(double confidenceLevel);
 
 	// pre implemented at abstract level
 	/**

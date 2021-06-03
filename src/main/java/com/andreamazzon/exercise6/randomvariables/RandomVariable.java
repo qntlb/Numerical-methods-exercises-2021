@@ -76,7 +76,6 @@ public abstract class RandomVariable implements RandomVariableInterface {
 //		 * to give different values to the one-dimensional array
 //		 * randomVariableRealizations every time is called.
 //		 */
-//		generateValues(n);
 //		double mean = UsefulMethodsMatricesAndVectors.getAverage(generateValues(n));
 //		return mean;
 //	}

@@ -25,6 +25,9 @@ public class PseudoRandomNumbersTesting {
 
 		long[] sequenceGeneratedByTheFirstObject = firstGenerator.getRandomNumberSequence();
 
+		// Long.MAX_VALUE = -Long.MIN_VALUE-1
+		// Long.MIN_VALUE = -Long.MAX_VALUE-1
+		System.out.println(Long.MIN_VALUE / Math.pow(2, 48));
 		System.out.println();
 
 		System.out.println("Simulation of " + numberOfPseudoRandomNumbers + " integers with seed " + firstSeed

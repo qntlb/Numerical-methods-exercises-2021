@@ -28,7 +28,7 @@ public class AdjustedLinearCongruentialGenerator {
 
 	// note: all the fields are private!
 	private long[] randomNumbers;// array of long
-	private final long modulus = 2814749767110L;
+	private final long modulus = (long) Math.pow(2, 48);
 
 	private final long a = 6553590L; // if I don't put L after the number, it will complain that is out of range
 	private final long c = 11;// automatic upcasting
@@ -64,9 +64,9 @@ public class AdjustedLinearCongruentialGenerator {
 				result = remainderOverflow + remainderOfMaxValue;
 			}
 			long congruence = result % modulus;
-			// if (congruence < 0) {
-			// congruence += modulus;
-			// }
+//			if (congruence < 0) {
+//				congruence += modulus;
+//			}
 			randomNumbers[indexOfInteger + 1] = congruence;
 		}
 	}

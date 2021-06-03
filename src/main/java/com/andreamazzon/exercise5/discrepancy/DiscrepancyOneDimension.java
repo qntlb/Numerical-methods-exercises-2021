@@ -42,7 +42,7 @@ public class DiscrepancyOneDimension {
 		 * (second last, we don't consider the last element in the set for the reason
 		 * you can see in the PDF) and b is bigger than set[position]
 		 */
-		for (int position = 0; position <= totalNumberOfPoints - 1; position++) {
+		for (int position = 0; position < totalNumberOfPoints - 1; position++) {
 			/*
 			 * Maximum value of the absolute value that appears in the definition of
 			 * discrepancy, given by intervals whose left end is set[position]

@@ -27,6 +27,11 @@ public class ExponentialRandomVariable extends RandomVariable {
 		return lambda;
 	}
 
+	// other possibility: the intensity can be changed
+//	public void setLambda() { // getter, if the user wants to get the intensity
+//		this.lambda = lambda;
+//	}
+//
 	// The following methods are specific of the exponential random variable
 
 	@Override

@@ -28,10 +28,15 @@ public class MonteCarloIntegrationCheck {
 
 		// mean and variance of the realizations
 		double averageComputations = simulator.getAverageComputations();
+		double nextAverageComputations = simulator.getAverageComputations();
+
 		double standardDeviationComputation = simulator.getStandardDeviationComputations();
 
 		System.out.println("The mean of the approximations of the integral for  " + numberOfDrawings + " drawings is "
 				+ formatterDouble.format(averageComputations));
+
+		System.out.println("The next mean of the approximations of the integral for  " + numberOfDrawings
+				+ " drawings is " + formatterDouble.format(nextAverageComputations));
 
 		System.out.println();
 

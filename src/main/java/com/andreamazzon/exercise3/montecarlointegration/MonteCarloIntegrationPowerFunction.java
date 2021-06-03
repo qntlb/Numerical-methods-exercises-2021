@@ -36,7 +36,9 @@ public class MonteCarloIntegrationPowerFunction extends MonteCarloEvaluationsWit
 		 * seed to MersenneTwister, since otherwise teh result would be always the same
 		 */
 		DoubleStream randomNumbers = DoubleStream.generate(new MersenneTwister()).limit(numberOfDrawings);
-		return randomNumbers.map(x -> Math.pow(x, exponent)).average().getAsDouble();
+		DoubleStream powers = randomNumbers.map(x -> Math.pow(x, exponent));
+		return powers.average().getAsDouble();
+		// return randomNumbers.map(x -> Math.pow(x, exponent)).average().getAsDouble();
 	}
 
 	@Override

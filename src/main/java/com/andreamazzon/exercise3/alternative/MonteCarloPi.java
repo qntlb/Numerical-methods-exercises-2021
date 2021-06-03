@@ -30,8 +30,8 @@ public class MonteCarloPi extends MonteCarloEvaluationsWithExactResultAbstract {
 	public double piMonteCarlo() {
 		int numberOfPOintsInsideCircle = 0;
 		for (int i = 0; i < numberOfDrawings; i++) {
-			double x = Math.random();// random double between -1 and 1
-			double y = Math.random();// random double between -1 and 1
+			double x = Math.random();// random double between 0 and 1
+			double y = Math.random();// random double between 0 and 1
 			if (x * x + y * y < 1) {
 				numberOfPOintsInsideCircle += 1;
 			}

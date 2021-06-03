@@ -24,8 +24,8 @@ public class HarmonicSum {
 	 */
 	static double doubleHarmonicSumForward(int n) {
 		double sum = 0; // double
-		for (int i = 1; i < n + 1; i++) {
-			sum += (1.0 / i);
+		for (int i = 1; i <= n; i++) {
+			sum += (1 / (double) i);
 		}
 		return sum;
 	}
@@ -36,8 +36,11 @@ public class HarmonicSum {
 	 * @param n order of the sum
 	 * @return the value of the sum, double
 	 */
-	static double doubleHarmonicSumBackward(int n) {
+	static double doubleHarmonicSumBackward(int n, boolean isFloat) {
 		double sum = 0; // double
+		if (isFloat) {
+			sum = (float) sum;
+		}
 		for (int i = n; i > 0; i--) {
 			sum += (1.0 / i);
 		}
@@ -83,6 +86,6 @@ public class HarmonicSum {
 		System.out.println("The forward harmonic sum of order " + harmonicSumOrder + " in double precision is "
 				+ doubleHarmonicSumForward(harmonicSumOrder));
 		System.out.println("The backward harmonic sum of order " + harmonicSumOrder + " in double precision is "
-				+ doubleHarmonicSumBackward(harmonicSumOrder));
+				+ doubleHarmonicSumBackward(harmonicSumOrder, true));
 	}
 }

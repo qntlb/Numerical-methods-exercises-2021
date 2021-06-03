@@ -78,11 +78,7 @@ public class VanDerCorputDiscrepancy {
 		 * must be downcasted if you want to call the getVanDerCorputStarDiscrepancy
 		 * method.
 		 */
-		DoubleUnaryOperator starDiscrepancyFunction = (sequenceLength) -> {
-			double starDiscrepancy = getVanDerCorputStarDiscrepancy((int) sequenceLength, base);
-			return starDiscrepancy;
-		};
-
+		DoubleUnaryOperator starDiscrepancyFunction = (x) -> getVanDerCorputStarDiscrepancy((int) x, base);
 		/*
 		 * a function returning log(x)/x for a double n. In the plot, x will be the size
 		 * of the Van der Corput sequences.

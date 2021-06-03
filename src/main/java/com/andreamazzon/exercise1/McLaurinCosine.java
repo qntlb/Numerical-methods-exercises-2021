@@ -32,7 +32,7 @@ public class McLaurinCosine {
 
 		double macLaurinApproximation = 0.0; // initialization of the sum
 
-		double factorial = 1;// you can get negative numbers due to an overflow for large m
+		int factorial = 1;// you can get negative numbers due to an overflow for large m
 		double powerOfX = 1;
 		int sign = 1;
 
@@ -42,11 +42,14 @@ public class McLaurinCosine {
 			macLaurinApproximation += sign * powerOfX / factorial;
 
 			// not such an elegant way to look at what's happening: debug by Eclipse!
-			// System.out.println("Power = " + Math.pow(x, 2 * i));
-			// System.out.println("Factorial = " + factorial);
+			System.out.println("Power = " + Math.pow(x, 2 * i));
+			System.out.println("Factorial = " + factorial);
 
-			factorial *= (2 * i + 1);
-			factorial *= (2 * i + 2);// factorial of 2(i+1)
+			// factorial *= (2 * i + 1);//factorial*(2(k-1)+1)=factorial*(2k-1)
+			// factorial *= (2 * i + 2);// factorial*(2k-1)*(2 * (k-1) +
+			// 2)=factorial*(2k-1)*(2*k)
+
+			factorial *= (2 * i + 1) * (2 * i + 2);// factorial*(2(k-1)+1)*(2 * (k-1) + 2)=factorial*(2k-1)*(2*k)
 
 			powerOfX *= x * x;
 
@@ -98,8 +101,8 @@ public class McLaurinCosine {
 	public static void main(String[] args) {
 
 		double angle = 3;
-		int maxOrder = 500;
-		macLaurinCosineSeriesConvergence(angle, maxOrder);
+		int maxOrder = 15;
+		// macLaurinCosineSeriesConvergence(angle, maxOrder);
 
 		double approximatedValueForMaxOrder = macLaurinCosineSeries(angle, maxOrder);
 

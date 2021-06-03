@@ -37,10 +37,13 @@ public class TestDiscrepancy {
 				+ DiscrepancyOneDimension.getDiscrepancy(thirdSet));
 		System.out.println("The star discrepancy of the set " + Arrays.toString(thirdSet) + " is "
 				+ DiscrepancyOneDimension.getStarDiscrepancy(thirdSet));
-
+		System.out.println(
+				"Number of points in [0.2,0.24] divided by total number of points minus length of the interval "
+						+ (5.0 / 8 - 0.04));
 		System.out.println();
 
 		// in the computation of the discrepancy we are not checking [0.27, 1]!
+		// 2/2-(0.27-0.1)
 		double[] fourthSet = { 0.1, 0.27 };
 		System.out.println("The discrepancy of the set " + Arrays.toString(fourthSet) + " is "
 				+ DiscrepancyOneDimension.getDiscrepancy(fourthSet));

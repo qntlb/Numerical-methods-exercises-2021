@@ -93,29 +93,5 @@ public class ImportanceSamplingTesting {
 		System.out.println("Number of times when standard sampling is better: " + numberOffWinsStandardSampling);
 		System.out.println("Number of times when importance sampling is better: " + numberOffWinsImportanceSampling);
 
-		/*
-		 * Comment on the variance: Var(h(X)) - Var(h(Y)f(Y)/g(Y)) = \int h^2(x)f(x)dx -
-		 * \int (h^2(x)f^2(x)/g^2(x))g(x)dx = \int h^2(x)f(x)(1-f(x)/g(x))dx, therefore
-		 * weighted Monte-Carlo leads to a strong variance reduction if g(x) is
-		 * significantly bigger than f(x) for the values of x for which h^2(x) is
-		 * bigger. This is the case in our example, since we choose a random variable
-		 * with distribution centered in barrier
-		 *
-		 */
-
-		// variance of the sample for standard sampling
-		System.out.println();
-		final double varianceStandardSampling = standardNormal.getSampleStdDeviation(numberOfDrawings,
-				indicatorIntegrand);
-		System.out.println("Variance for standard sampling: " + formatterDouble.format(varianceStandardSampling));
-
-		final DoubleUnaryOperator weight = x -> (standardNormal.getDensityFunction(x)
-				/ shiftedNormal.getDensityFunction(x));
-		final DoubleUnaryOperator whatToSample = (x -> indicatorIntegrand.applyAsDouble(x) * weight.applyAsDouble(x));
-
-		final double varianceImportanceSampling = shiftedNormal.getSampleStdDeviation(numberOfDrawings, whatToSample);
-
-		System.out.println("Variance for importance sampling: " + formatterDouble.format(varianceImportanceSampling));
-
 	}
 }

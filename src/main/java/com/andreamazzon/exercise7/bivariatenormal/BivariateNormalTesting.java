@@ -72,6 +72,111 @@ public class BivariateNormalTesting {
 	 * @throws Exception, if unable to compute a result given by the call to the
 	 *                    method Callable<double[]> functionToEvaluate
 	 */
+	public void testMethodLengthy(NormalRandomVariable normalTestSampler, GenerationMethods method) throws Exception {
+
+		/*
+		 * expected value of the two normal random variables Z_1,Z_2 (they are
+		 * independent and have same distribution)
+		 */
+		mu = normalTestSampler.getAnalyticMean();// field of the class now!
+
+		/*
+		 * Here we have a switch based on the name of the four methods, see the enum
+		 * type GenerationMethods
+		 */
+		switch (method) {// name of the method
+		case BIVARIATENORMAL:
+			System.out.println("Bivariate Normal");
+			/*
+			 * for every Monte-Carlo approximation, we compute the percentage error and the
+			 * time needed to do the computation. Then we compute the average.
+			 */
+			for (int i = 0; i < numberOfComputations; i++) {
+				/*
+				 * We compute for how many generated pairs both the values are smaller than mu
+				 */
+				double numberOfTimesBothSmallerThanMu = 0.0;
+				long lStartTime = System.currentTimeMillis();// time when the computations starts
+				for (int j = 0; j < numberOfDrawings; j++) {
+					double[] generatedPair = normalTestSampler.generateBivariate();
+					if (generatedPair[0] < mu && generatedPair[1] < mu) {
+						numberOfTimesBothSmallerThanMu++;
+					}
+				}
+				/*
+				 * number of generated pairs for which both the values are smaller then the mean
+				 * divided by the number of simulations: you expect the result to be close to
+				 * 0.25
+				 */
+				double frequence = numberOfTimesBothSmallerThanMu / numberOfDrawings;
+				long lEndTime = System.currentTimeMillis();// time when the computation ends: it depends on the method.
+				double elapsedTime = lEndTime - lStartTime;
+				sumElapsedTime += elapsedTime;
+				double error = Math.abs(frequence - exactResult) / exactResult * 100;
+				sumError += error;
+			}
+			break;
+
+		case ACCEPTANCEREJECTION:
+			System.out.println("Acceptance rejection");
+			/*
+			 * for every Monte-Carlo approximation, we compute the percentage error and the
+			 * time needed to do the computation. Then we compute the average.
+			 */
+			for (int i = 0; i < numberOfComputations; i++) {
+				/*
+				 * We compute for how many generated pairs both the values are smaller than mu
+				 */
+				double numberOfTimesBothSmallerThanMu = 0.0;
+				long lStartTime = System.currentTimeMillis();// time when the computations starts
+				for (int j = 0; j < numberOfDrawings; j++) {
+					double[] generatedPair = normalTestSampler.generateBivariateNormalAR();
+					if (generatedPair[0] < mu && generatedPair[1] < mu) {
+						numberOfTimesBothSmallerThanMu++;
+					}
+				}
+				/*
+				 * number of generated pairs for which both the values are smaller then the mean
+				 * divided by the number of simulations: you expect the result to be close to
+				 * 0.25
+				 */
+				double frequence = numberOfTimesBothSmallerThanMu / numberOfDrawings;
+				long lEndTime = System.currentTimeMillis();// time when the computation ends: it depends on the method.
+				double elapsedTime = lEndTime - lStartTime;
+				sumElapsedTime += elapsedTime;
+				double error = Math.abs(frequence - exactResult) / exactResult * 100;
+				sumError += error;
+			}
+			break;
+		}
+
+		double averageElapsedTime = sumElapsedTime / numberOfComputations;
+		double averageError = sumError / numberOfComputations;
+
+		System.out.println("Average elapsed time: " + formatterValue.format(averageElapsedTime));
+		System.out.println("Average percentage error: " + formatterValue.format(averageError));
+		System.out.println();
+	}
+
+	/**
+	 * It tests the precision and the efficiency of a selected method to generate a
+	 * pair of independent normal random variables with expectation mu and standard
+	 * deviation sigma. The method (inversion sampling or acceptance rejection) is
+	 * selected by means of a switch statement based on an enum type containing the
+	 * names of the methods. The test is to compute the Monte-Carlo approximation of
+	 * P(X_1<mu, X_2 <mu) where X_1, X_2 are independent, normal random variables
+	 * with expectation mu. For every method we compute and print the average
+	 * percentage error with respect to the exact probability 0.25 and the time
+	 * needed in order to generate the drawings of (X_1,X_2) and do the
+	 * computations.
+	 *
+	 * @param normalTestSampler, object of type NormalRandomVariable. It calls the
+	 *                           generation methods
+	 * @param method,            enum type whose value is the name of one of the two
+	 *                           generation methods.
+	 * @throws Exception, if unable to compute a result given by the call to the
+	 *                    method Callable<double[]> functionToEvaluate
+	 */
 	public void testMethod(NormalRandomVariable normalTestSampler, GenerationMethods method) throws Exception {
 
 		/*
@@ -141,7 +246,7 @@ public class BivariateNormalTesting {
 				}
 			}
 			/*
-			 * number of generated pairs for which both the values are smaller then the mean
+			 * number of generated pairs for which both the values are smaller than the mean
 			 * divided by the number of simulations: you expect the result to be close to
 			 * 0.25
 			 */

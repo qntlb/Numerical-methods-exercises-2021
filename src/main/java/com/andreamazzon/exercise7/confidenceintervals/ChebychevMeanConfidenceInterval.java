@@ -37,7 +37,7 @@ public class ChebychevMeanConfidenceInterval extends MeanConfidenceInterval {
 	 * on the Chebychev inequality.
 	 *
 	 * @param level, level of confidence
-	 * @return value of the lower bound
+	 * @return value of the upper bound
 	 */
 	@Override
 	public double getUpperBoundConfidenceInterval(double level) {

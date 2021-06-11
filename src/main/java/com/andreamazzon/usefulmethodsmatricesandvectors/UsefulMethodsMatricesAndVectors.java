@@ -168,6 +168,23 @@ public class UsefulMethodsMatricesAndVectors {
 	}
 
 	/**
+	 * It returns the product of a vector with a (constant) double
+	 *
+	 * @param vector
+	 * @param value, to the double number that we sum to the vector
+	 * @return product of the vector with the double number
+	 */
+	public static double[] prodVectorWithDouble(double[] vector, double value) {
+		int firstLength = vector.length;
+
+		double[] product = new double[firstLength];
+		for (int i = 0; i < firstLength; i++) {
+			product[i] = vector[i] + value;
+		}
+		return product;
+	}
+
+	/**
 	 * It returns the sum of a vector with a (constant) double
 	 *
 	 * @param vector
@@ -182,6 +199,84 @@ public class UsefulMethodsMatricesAndVectors {
 			sum[i] = vector[i] + value;
 		}
 		return sum;
+	}
+
+	/**
+	 * It returns the sum of two vectors
+	 *
+	 * @param firstVector
+	 * @param secondVector
+	 * @return an array representing the element-wise sum of the two vectors
+	 */
+	public static double[] sumVectors(double[] firstVector, double[] secondVector) {
+		int firstLength = firstVector.length;
+		if (firstLength != secondVector.length) {
+			throw new IllegalArgumentException("Error: the two arrays must have same length!");
+		}
+
+		double[] sum = new double[firstLength];
+		for (int i = 0; i < firstLength; i++) {
+			sum[i] = firstVector[i] + secondVector[i];
+		}
+		return sum;
+	}
+
+	/**
+	 * It returns the product of two vectors
+	 *
+	 * @param firstVector
+	 * @param secondVector
+	 * @return an array representing the element-wise product of the two vectors
+	 */
+	public static double[] multVectors(double[] firstVector, double[] secondVector) {
+		int firstLength = firstVector.length;
+		if (firstLength != secondVector.length) {
+			throw new IllegalArgumentException("Error: the two arrays must have same length!");
+		}
+		double[] product = new double[firstLength];
+		for (int i = 0; i < firstLength; i++) {
+			product[i] = firstVector[i] * secondVector[i];
+		}
+		return product;
+	}
+
+	/**
+	 * It returns the difference of two vectors
+	 *
+	 * @param firstVector
+	 * @param secondVector
+	 * @return an array representing the element-wise difference of the two vectors
+	 */
+	public static double[] diffVectors(double[] firstVector, double[] secondVector) {
+		int firstLength = firstVector.length;
+		if (firstLength != secondVector.length) {
+			throw new IllegalArgumentException("Error: the two arrays must have same length!");
+		}
+
+		double[] difference = new double[firstLength];
+		for (int i = 0; i < firstLength; i++) {
+			difference[i] = firstVector[i] - secondVector[i];
+		}
+		return difference;
+	}
+
+	/**
+	 * It returns the element-wise ratio of two vectors
+	 *
+	 * @param firstVector
+	 * @param secondVector
+	 * @return an array representing the element-wise ratio of the two vectors
+	 */
+	public static double[] ratioVectors(double[] firstVector, double[] secondVector) {
+		int firstLength = firstVector.length;
+		if (firstLength != secondVector.length) {
+			throw new IllegalArgumentException("Error: the two arrays must have same length!");
+		}
+		double[] ratio = new double[firstLength];
+		for (int i = 0; i < firstLength; i++) {
+			ratio[i] = firstVector[i] / secondVector[i];
+		}
+		return ratio;
 	}
 
 }

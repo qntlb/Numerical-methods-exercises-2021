@@ -3,8 +3,6 @@ package com.andreamazzon.exercise10.approximationschemes;
 import java.util.function.DoubleUnaryOperator;
 
 import net.finmath.montecarlo.BrownianMotion;
-import net.finmath.montecarlo.BrownianMotionFromMersenneRandomNumbers;
-import net.finmath.montecarlo.RandomVariableFromDoubleArray;
 import net.finmath.stochastic.RandomVariable;
 import net.finmath.time.TimeDiscretization;
 
@@ -75,45 +73,7 @@ public abstract class AbstractProcessSimulation {
 	 * of this class) and exploit one of its methods.
 	 */
 	private void generate() {
-
-		final int numberOfTimes = times.getNumberOfTimes();
-
-		/*
-		 * one-dimensional Brownian motion. Note that it has a method getIncrement(final
-		 * int timeIndex, final int factor) that must be called in the generation of the
-		 * diffusion in the derived classes. So you don't really use it here, but in the
-		 * derived classes.
-		 */
-		brownianMotion = new BrownianMotionFromMersenneRandomNumbers(times, 1, numberOfSimulations, seed);
-
-		/*
-		 * the drift and the diffusion of the process are random variables. We don't
-		 * need to store them: they will be uploaded every time.
-		 */
-		RandomVariable processDrift;
-		RandomVariable processDiffusion;
-		paths = new RandomVariable[numberOfTimes];// one random variable every time
-
-		paths[0] = new RandomVariableFromDoubleArray(times.getTime(0), initialValue);
-
-		for (int timeIndex = 1; timeIndex < times.getNumberOfTimes(); timeIndex++) {
-			/*
-			 * for every time step, we compute drift and diffusion of the process, as
-			 * RandomVariable objects, and we add them to the previous value of the process.
-			 */
-			processDrift = getDrift(paths[timeIndex - 1], timeIndex);
-			processDiffusion = getDiffusion(paths[timeIndex - 1], timeIndex);
-			paths[timeIndex] = paths[timeIndex - 1].apply(inverseTransform).add(processDrift).add(processDiffusion);
-			/*
-			 * F = f^{-1}.
-			 * F(X_{t_k})=F(X_{t_{k-1}})+drift(F(X_{t_{k-1}),t_{k-1}]+diffusion(F(X_{t_{k-1}
-			 * ),t_{k-1}]
-			 */
-			paths[timeIndex] = paths[timeIndex].apply(transform);
-			/*
-			 * X_{t_k}=f(F(X_{t_k}))
-			 */
-		}
+		// IMPLEMENT IT!
 	}
 
 	// getters
@@ -170,7 +130,7 @@ public abstract class AbstractProcessSimulation {
 	 */
 	public double getTimeHorizon() {
 		// implement it
-		return times.getTime(getNumberOfTimes());
+		return 0;
 	}
 
 	/**
@@ -221,7 +181,7 @@ public abstract class AbstractProcessSimulation {
 	 */
 	public RandomVariable getProcessAtGivenTime(double time) {
 		// implement it
-		return getProcessAtGivenTimeIndex(times.getTimeIndex(time));
+		return null;
 	}
 
 	/**
@@ -233,13 +193,7 @@ public abstract class AbstractProcessSimulation {
 	 */
 	public double[] getPathForGivenSimulation(int pathNumber) {
 		// implement it
-		final RandomVariable[] pathAsRandomVariables = getPaths();
-		final int numberOfTimes = times.getNumberOfTimes();
-		final double samplePath[] = new double[numberOfTimes];
-		for (int timeIndex = 0; timeIndex < numberOfTimes; timeIndex++) {
-			samplePath[timeIndex] = pathAsRandomVariables[timeIndex].get(pathNumber);
-		}
-		return samplePath;
+		return null;
 	}
 
 	/**
@@ -262,6 +216,6 @@ public abstract class AbstractProcessSimulation {
 	 */
 	public RandomVariable getFinalValue() {
 		// implement it
-		return getProcessAtGivenTimeIndex(times.getNumberOfTimes() - 1);
+		return null;
 	}
 }

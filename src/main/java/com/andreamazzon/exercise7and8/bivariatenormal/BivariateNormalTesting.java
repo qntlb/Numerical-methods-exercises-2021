@@ -88,6 +88,8 @@ public class BivariateNormalTesting {
 		switch (method) {// name of the method
 		case INVERSIONSAMPLING:
 			System.out.println("Inversion sampling");
+			sumElapsedTime = 0;
+			sumError = 0;
 			/*
 			 * for every Monte-Carlo approximation, we compute the percentage error and the
 			 * time needed to do the computation. Then we compute the average.
@@ -120,6 +122,8 @@ public class BivariateNormalTesting {
 
 		case ACCEPTANCEREJECTION:
 			System.out.println("Acceptance rejection");
+			sumElapsedTime = 0;
+			sumError = 0;
 			/*
 			 * for every Monte-Carlo approximation, we compute the percentage error and the
 			 * time needed to do the computation. Then we compute the average.
@@ -151,6 +155,8 @@ public class BivariateNormalTesting {
 			break;
 		case BOXMULLER:
 			System.out.println("Box Müller");
+			sumElapsedTime = 0;
+			sumError = 0;
 			/*
 			 * for every Monte-Carlo approximation, we compute the percentage error and the
 			 * time needed to do the computation. Then we compute the average.
@@ -183,6 +189,8 @@ public class BivariateNormalTesting {
 
 		case MODIFIEDBOXMULLER:
 			System.out.println("Modified Box Müller");
+			sumElapsedTime = 0;
+			sumError = 0;
 			/*
 			 * for every Monte-Carlo approximation, we compute the percentage error and the
 			 * time needed to do the computation. Then we compute the average.
@@ -242,7 +250,8 @@ public class BivariateNormalTesting {
 	 *                    method Callable<double[]> functionToEvaluate
 	 */
 	public void testMethod(NormalRandomVariable normalTestSampler, GenerationMethods method) throws Exception {
-
+		sumElapsedTime = 0;
+		sumError = 0;
 		/*
 		 * expected value of the two normal random variables Z_1,Z_2 (they are
 		 * independent and have same distribution)
@@ -259,7 +268,17 @@ public class BivariateNormalTesting {
 		case INVERSIONSAMPLING:
 			System.out.println("Bivariate Normal");
 			// we now say what must be returned by functionToEvaluate in this case
+
 			functionToEvaluate = () -> normalTestSampler.generateBivariate();
+
+			// more explicitly:
+
+//			functionToEvaluate = new Callable<double[]>() {
+//				@Override
+//				public double[] call() throws Exception {
+//					return normalTestSampler.generateBivariate();
+//				}
+//			};
 			values = testMethod(functionToEvaluate);
 			break;
 

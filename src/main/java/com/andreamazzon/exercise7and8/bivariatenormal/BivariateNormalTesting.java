@@ -26,8 +26,8 @@ public class BivariateNormalTesting {
 
 	// These fields are initialized here.
 	private double exactResult = 0.25;// because Z_1 and Z_2 are independent
-	private double sumElapsedTime = 0;
-	private double sumError = 0;
+	private double sumElapsedTime;
+	private double sumError;
 
 	/*
 	 * expected value of the two normal random variables Z_1,Z_2 (they are
@@ -74,7 +74,8 @@ public class BivariateNormalTesting {
 	 *                    method Callable<double[]> functionToEvaluate
 	 */
 	public void testMethodLengthy(NormalRandomVariable normalTestSampler, GenerationMethods method) throws Exception {
-
+		double sumElapsedTime = 0;
+		double sumError = 0;
 		/*
 		 * expected value of the two normal random variables Z_1,Z_2 (they are
 		 * independent and have same distribution)
@@ -88,8 +89,6 @@ public class BivariateNormalTesting {
 		switch (method) {// name of the method
 		case INVERSIONSAMPLING:
 			System.out.println("Inversion sampling");
-			sumElapsedTime = 0;
-			sumError = 0;
 			/*
 			 * for every Monte-Carlo approximation, we compute the percentage error and the
 			 * time needed to do the computation. Then we compute the average.
@@ -122,8 +121,6 @@ public class BivariateNormalTesting {
 
 		case ACCEPTANCEREJECTION:
 			System.out.println("Acceptance rejection");
-			sumElapsedTime = 0;
-			sumError = 0;
 			/*
 			 * for every Monte-Carlo approximation, we compute the percentage error and the
 			 * time needed to do the computation. Then we compute the average.
@@ -155,8 +152,6 @@ public class BivariateNormalTesting {
 			break;
 		case BOXMULLER:
 			System.out.println("Box Müller");
-			sumElapsedTime = 0;
-			sumError = 0;
 			/*
 			 * for every Monte-Carlo approximation, we compute the percentage error and the
 			 * time needed to do the computation. Then we compute the average.
@@ -189,8 +184,6 @@ public class BivariateNormalTesting {
 
 		case MODIFIEDBOXMULLER:
 			System.out.println("Modified Box Müller");
-			sumElapsedTime = 0;
-			sumError = 0;
 			/*
 			 * for every Monte-Carlo approximation, we compute the percentage error and the
 			 * time needed to do the computation. Then we compute the average.

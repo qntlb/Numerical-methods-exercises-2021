@@ -146,9 +146,10 @@ public class BrownianMotion {
 	 */
 	public TimeDiscretization getTimeDiscretization() {
 		/*
-		 * fine as long as the implementation of the object of TimeDiscretization is
-		 * immutable: in this case it cannot be modified, so even if we return a
-		 * reference to the object we are safe
+		 * fine as long as the implementation of the class implementing
+		 * TimeDiscretization used here is immutable: immutable means there are no ways
+		 * to modify an object of such a class, so even if we return a reference to the
+		 * object we are safe
 		 */
 		return times;
 	}

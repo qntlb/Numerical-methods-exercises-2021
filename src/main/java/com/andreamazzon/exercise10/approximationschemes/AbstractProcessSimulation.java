@@ -139,9 +139,11 @@ public abstract class AbstractProcessSimulation {
 	 */
 	public BrownianMotion getStochasticDriver() {
 		/*
-		 * fine as long as the implementation of the object of BrownianMotion is
-		 * immutable: in this case it cannot be modified, so even if we return a
-		 * reference to the object we are safe
+		 * fine as long since we know that the implementation of the class implementing
+		 * BrownianMotion that we use here is immutable, see
+		 * BrownianMotionFromMersenneRandomNumbers: immutable means there are no ways to
+		 * modify an object of such a class, so even if we return a reference to the
+		 * object we are safe
 		 */
 		return brownianMotion;
 	}
@@ -268,7 +270,6 @@ public abstract class AbstractProcessSimulation {
 	 * @return random variable holding the realizations of the process at final time
 	 */
 	public RandomVariable getFinalValue() {
-		// implement it
 		return getProcessAtGivenTimeIndex(times.getNumberOfTimes() - 1);
 	}
 }

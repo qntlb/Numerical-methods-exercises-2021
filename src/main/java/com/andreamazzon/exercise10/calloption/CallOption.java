@@ -33,8 +33,12 @@ public class CallOption {
 	public double priceCall(AbstractProcessSimulation underlying) {
 		// (S_T-K)^+
 		final RandomVariable payoff = underlying.getProcessAtGivenTime(maturity).sub(strike).floor(0.0);
+
+		// e^{-rT}(S_T-K)^+
 		final RandomVariable discountedPayoff = payoff.mult(Math.exp(-riskFreeRate * maturity));
+
 		final double price = discountedPayoff.getAverage();
+
 		return price;
 	}
 

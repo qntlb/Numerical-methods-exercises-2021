@@ -40,7 +40,7 @@ public class BrownianChecks {
 
 		/*
 		 * We first want to compute an approximation of the correlation between the two
-		 * factors, at ever time t_i in the discretization. This is the approximation of
+		 * factors. This is the approximation of
 		 * E[B_{t_j}^1B_{t_j}^2]-E[B_{t_j}^1]E[B_{t_j}^2] = E[B_{t_j}^1B_{t_j}^2]. So we
 		 * have to compute the approximated expectation of B_{t_j}^1B_{t_j}^2.
 		 */

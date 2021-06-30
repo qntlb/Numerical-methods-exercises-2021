@@ -57,6 +57,15 @@ public class BrownianMotion {
 		this.numberOfPaths = numberOfPaths;
 	}
 
+	// let's say numberOfTimeSteps = 1000 if not given
+	public BrownianMotion(double initialTimeValue, // number of time steps of the time
+			// discretization
+			double deltaT, // length of the time step (supposed IN THIS CASE to be constant)
+			int numberOfFactors, int numberOfPaths) {
+		this(initialTimeValue, 1000, // number of time steps of the time
+				deltaT, numberOfFactors, numberOfPaths);
+	}
+
 	/*
 	 * It generates a Brownian motion, i.e., it fills the entries of
 	 * brownianIncrements and brownianPaths. In particular, it first creates
@@ -172,7 +181,8 @@ public class BrownianMotion {
 		 * object itself, it might be accessed and modified from the outside. For
 		 * example, modifying the n-th element.
 		 */
-		return brownianIncrements.clone();
+		RandomVariable[][] brownianIncrementsClone = brownianIncrements.clone();
+		return brownianIncrementsClone;
 	}
 
 	/**

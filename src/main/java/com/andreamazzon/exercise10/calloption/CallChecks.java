@@ -30,14 +30,14 @@ public class CallChecks {
 
 	public static void main(String[] args) throws CalculationException {
 
-		final int numberOfSimulations = 10000;// number of simulated paths
-
 		final double initialPrice = 100.0;
 
 		// this will be the drift: we simulate under the risk neutral probability
 		// measure
 		final double riskFreeRate = 0.4;
 		final double volatility = 0.25;
+
+		final int numberOfSimulations = 10000;// number of simulated paths
 
 		// time discretization
 		final double initialTime = 0;

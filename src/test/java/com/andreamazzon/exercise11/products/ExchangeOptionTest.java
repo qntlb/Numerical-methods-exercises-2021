@@ -88,34 +88,38 @@ public class ExchangeOptionTest {
 	 * @throws CalculationException
 	 */
 	@Test
-	public void testCorrelation() throws CalculationException {
-		// W_1 = B_1
-		// W_2 = rho B_1 + sqrt(1-rho^2)B^2
-		// here you simulate B^1, B^2 independent
-		// Two-dimensional Brownian motion
-		final BrownianMotion brownian = new BrownianMotionFromMersenneRandomNumbers(times, 2, numberOfSimulations,
-				seed);// (B^1,B^2)
+	public void testCorrelation() {
+		try {
+			// W_1 = B_1
+			// W_2 = rho B_1 + sqrt(1-rho^2)B^2
+			// here you simulate B^1, B^2 independent
+			// Two-dimensional Brownian motion
+			final BrownianMotion brownian = new BrownianMotionFromMersenneRandomNumbers(times, 2, numberOfSimulations,
+					seed);// (B^1,B^2)
 
-		System.out.println("Correlation      Price");
+			System.out.println("Correlation      Price");
 
-		double newCorrelation;
-		for (int i = 0; i <= 20; i++) {
-			newCorrelation = (i - 10) * 0.1;// the correlation goes from -1 to 1
-			double[][] newCorrelationMatrix = { { 1.0, newCorrelation }, { newCorrelation, 1.0 } };
-			/*
-			 * finmath class, we use it to get the simulation of a two dimensional
-			 * Black-Scholes model: two geometric Brownian motions, with possibly dependent
-			 * stochastic drivers (correlation specified by the correlation matrix). Note
-			 * that the class implements AssetModelMonteCarloSimulationModel.
-			 */
-			final AssetModelMonteCarloSimulationModel simulationTwoDimGeometricBrownian = new MonteCarloMultiAssetBlackScholesModel(
-					brownian, initialPrices, riskFreeRate, volatilities, newCorrelationMatrix);
+			double newCorrelation;
+			for (int i = 0; i <= 20; i++) {
+				newCorrelation = (i - 10) * 0.1;// the correlation goes from -1 to 1
+				double[][] newCorrelationMatrix = { { 1.0, newCorrelation }, { newCorrelation, 1.0 } };
+				/*
+				 * finmath class, we use it to get the simulation of a two dimensional
+				 * Black-Scholes model: two geometric Brownian motions, with possibly dependent
+				 * stochastic drivers (correlation specified by the correlation matrix). Note
+				 * that the class implements AssetModelMonteCarloSimulationModel.
+				 */
+				final AssetModelMonteCarloSimulationModel simulationTwoDimGeometricBrownian = new MonteCarloMultiAssetBlackScholesModel(
+						brownian, initialPrices, riskFreeRate, volatilities, newCorrelationMatrix);
 
-			final double monteCarloPrice = exchangeOption.getValue(simulationTwoDimGeometricBrownian);
+				final double monteCarloPrice = exchangeOption.getValue(simulationTwoDimGeometricBrownian);
 
-			System.out.print(formatterCorrelation.format(newCorrelation) + "         ");
+				System.out.print(formatterCorrelation.format(newCorrelation) + "         ");
 
-			System.out.println(formatterValue.format(monteCarloPrice));
+				System.out.println(formatterValue.format(monteCarloPrice));
+			}
+		} catch (CalculationException e) {
+			Assert.fail();
 		}
 	}
 
@@ -127,39 +131,43 @@ public class ExchangeOptionTest {
 	 */
 	@Test
 	public void testExchangeForGivenSeed() throws CalculationException {
-		// W_1 = B_1
-		// W_2 = rho B_1 + sqrt(1-rho^2)B^2
-		// here you simulate B^1, B^2 independent
-		// Two-dimensional Brownian motion
-		final BrownianMotion brownian = new BrownianMotionFromMersenneRandomNumbers(times, 2, numberOfSimulations,
-				seed);// (B^1,B^2)
-		/*
-		 * finmath class, we use it to get the simulation of a two dimensional
-		 * Black-Scholes model: two geometric Brownian motions, with possibly dependent
-		 * stochastic drivers (correlation specified by the correlation matrix). Note
-		 * that the class implements AssetModelMonteCarloSimulationModel.
-		 */
-		final AssetModelMonteCarloSimulationModel simulationTwoDimGeometricBrownian = new MonteCarloMultiAssetBlackScholesModel(
-				brownian, initialPrices, riskFreeRate, volatilities, correlationMatrix);
-		/*
-		 * We now create an object of ExchangeOption with maturity given above, and call
-		 * its getValue(final MonteCarloSimulationModel model) method, passing it
-		 * simulationTwoDimGeometricBrownian. This method is an overloading of
-		 * getValue(double evaluationTime, AssetModelMonteCarloSimulationModel model)
-		 * inherited from AbstractMonteCarloProduct. It returns a double which is the
-		 * price of the option.
-		 */
+		try {
+			// W_1 = B_1
+			// W_2 = rho B_1 + sqrt(1-rho^2)B^2
+			// here you simulate B^1, B^2 independent
+			// Two-dimensional Brownian motion
+			final BrownianMotion brownian = new BrownianMotionFromMersenneRandomNumbers(times, 2, numberOfSimulations,
+					seed);// (B^1,B^2)
+			/*
+			 * finmath class, we use it to get the simulation of a two dimensional
+			 * Black-Scholes model: two geometric Brownian motions, with possibly dependent
+			 * stochastic drivers (correlation specified by the correlation matrix). Note
+			 * that the class implements AssetModelMonteCarloSimulationModel.
+			 */
+			final AssetModelMonteCarloSimulationModel simulationTwoDimGeometricBrownian = new MonteCarloMultiAssetBlackScholesModel(
+					brownian, initialPrices, riskFreeRate, volatilities, correlationMatrix);
+			/*
+			 * We now create an object of ExchangeOption with maturity given above, and call
+			 * its getValue(final MonteCarloSimulationModel model) method, passing it
+			 * simulationTwoDimGeometricBrownian. This method is an overloading of
+			 * getValue(double evaluationTime, AssetModelMonteCarloSimulationModel model)
+			 * inherited from AbstractMonteCarloProduct. It returns a double which is the
+			 * price of the option.
+			 */
 
-		final double monteCarloPrice = exchangeOption.getValue(simulationTwoDimGeometricBrownian);
-		final double analyticalPrice = computeAnalyticalValue();
-		final double error = Math.abs(monteCarloPrice - analyticalPrice) / analyticalPrice;
+			final double monteCarloPrice = exchangeOption.getValue(simulationTwoDimGeometricBrownian);
+			final double analyticalPrice = computeAnalyticalValue();
+			final double error = Math.abs(monteCarloPrice - analyticalPrice) / analyticalPrice;
 
-		System.out.println("Simulated price of the exchange option using multi asset MC: "
-				+ formatterValue.format(monteCarloPrice));
-		System.out.println("Analytical price: " + formatterValue.format(analyticalPrice));
-		System.out.println("Percentage error: " + formatterPercentage.format(error));
-		System.out.println();
-		Assert.assertTrue(100 * error < percentageTolerance);
+			System.out.println("Simulated price of the exchange option using multi asset MC: "
+					+ formatterValue.format(monteCarloPrice));
+			System.out.println("Analytical price: " + formatterValue.format(analyticalPrice));
+			System.out.println("Percentage error: " + formatterPercentage.format(error));
+			System.out.println();
+			Assert.assertTrue(100 * error < percentageTolerance);
+		} catch (CalculationException e) {
+			Assert.fail();
+		}
 	}
 
 	/**
@@ -172,66 +180,67 @@ public class ExchangeOptionTest {
 	@Test
 	public void testExchangeWithRandomSeeds() throws CalculationException {
 
-		final int numberOfRepetitions = 300;// number of Monte Carlo computations
+		try {
 
-		// number of times we don't approximate the result as we would like
-		int numberOfFailures = 0;
+			final int numberOfRepetitions = 300;// number of Monte Carlo computations
 
-		// we want to get a random integer: we use the Random class of Java
-		final Random randomGenerator = new Random();
+			// number of times we don't approximate the result as we would like
+			int numberOfFailures = 0;
 
-		/*
-		 * We do the first computation for the first seed. In this way, we construct
-		 * here the object of type MonteCarloMultiAssetBlackScholesModel, and then for
-		 * every other computation we can just take the clone with modified seed.
-		 */
-		int randomSeed = randomGenerator.nextInt();
-
-		final BrownianMotion brownian = new BrownianMotionFromMersenneRandomNumbers(times, 2, numberOfSimulations,
-				randomSeed/* the seed changes at every iterations */);
-
-		// the seed is "hidden" in the BrownianMotion object
-		final AssetModelMonteCarloSimulationModel firstSimulationTwoDimGeometricBrownian = new MonteCarloMultiAssetBlackScholesModel(
-				brownian, initialPrices, riskFreeRate, volatilities, correlationMatrix);
-
-		double monteCarloPrice = exchangeOption.getValue(firstSimulationTwoDimGeometricBrownian);
-		double analyticalPrice = computeAnalyticalValue();
-		double error = Math.abs(monteCarloPrice - analyticalPrice) / analyticalPrice;
-
-		if (100 * error > percentageTolerance) {
-			numberOfFailures++; // counter updated if the relative error exceeds the tolerance
-		}
-
-		for (int i = 0; i < numberOfRepetitions - 1; i++) {
-
-			randomSeed = randomGenerator.nextInt();
+			// we want to get a random integer: we use the Random class of Java
+			final Random randomGenerator = new Random();
 
 			/*
-			 * get the price of your exchange option as above, now constructing your
-			 * MonteCarloMultiAssetBlackScholesModel with randomSeed.
+			 * We do the first computation for the first seed. In this way, we construct
+			 * here the object of type MonteCarloMultiAssetBlackScholesModel, and then for
+			 * every other computation we can just take the clone with modified seed.
 			 */
+			int randomSeed = randomGenerator.nextInt();
 
-			final AssetModelMonteCarloSimulationModel simulationTwoDimGeometricBrownian = firstSimulationTwoDimGeometricBrownian
-					.getCloneWithModifiedSeed(randomSeed);
+			final BrownianMotion brownian = new BrownianMotionFromMersenneRandomNumbers(times, 2, numberOfSimulations,
+					randomSeed/* the seed changes at every iterations */);
 
-			monteCarloPrice = exchangeOption.getValue(simulationTwoDimGeometricBrownian);
-			analyticalPrice = computeAnalyticalValue();
-			error = Math.abs(monteCarloPrice - analyticalPrice) / analyticalPrice;
+			// the seed is "hidden" in the BrownianMotion object
+			final AssetModelMonteCarloSimulationModel firstSimulationTwoDimGeometricBrownian = new MonteCarloMultiAssetBlackScholesModel(
+					brownian, initialPrices, riskFreeRate, volatilities, correlationMatrix);
+
+			double monteCarloPrice = exchangeOption.getValue(firstSimulationTwoDimGeometricBrownian);
+			double analyticalPrice = computeAnalyticalValue();
+			double error = Math.abs(monteCarloPrice - analyticalPrice) / analyticalPrice;
 
 			if (100 * error > percentageTolerance) {
 				numberOfFailures++; // counter updated if the relative error exceeds the tolerance
 			}
 
-		}
-		final double ratioFailure = ((double) numberOfFailures) / numberOfRepetitions;
-		final double percentageSuccess = 1 - ratioFailure;
-		System.out.println("The percentage of times when the percentage error is smaller than " + percentageTolerance
-				+ " is " + formatterPercentage.format(percentageSuccess));
-		System.out.println();
-		Assert.assertTrue(100 * ratioFailure < allowedFailurePercentage);
-	}
+			for (int i = 0; i < numberOfRepetitions - 1; i++) {
 
-	@Test
-	public void test() {
+				randomSeed = randomGenerator.nextInt();
+
+				/*
+				 * get the price of your exchange option as above, now constructing your
+				 * MonteCarloMultiAssetBlackScholesModel with randomSeed.
+				 */
+
+				final AssetModelMonteCarloSimulationModel simulationTwoDimGeometricBrownian = firstSimulationTwoDimGeometricBrownian
+						.getCloneWithModifiedSeed(randomSeed);
+
+				monteCarloPrice = exchangeOption.getValue(simulationTwoDimGeometricBrownian);
+				analyticalPrice = computeAnalyticalValue();
+				error = Math.abs(monteCarloPrice - analyticalPrice) / analyticalPrice;
+
+				if (100 * error > percentageTolerance) {
+					numberOfFailures++; // counter updated if the relative error exceeds the tolerance
+				}
+
+			}
+			final double ratioFailure = ((double) numberOfFailures) / numberOfRepetitions;
+			final double percentageSuccess = 1 - ratioFailure;
+			System.out.println("The percentage of times when the percentage error is smaller than "
+					+ percentageTolerance + " is " + formatterPercentage.format(percentageSuccess));
+			System.out.println();
+			Assert.assertTrue(100 * ratioFailure < allowedFailurePercentage);
+		} catch (CalculationException e) {
+			Assert.fail();
+		}
 	}
 }

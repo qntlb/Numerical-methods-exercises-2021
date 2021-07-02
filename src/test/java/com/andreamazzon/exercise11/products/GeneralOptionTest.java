@@ -31,7 +31,6 @@ class GeneralOptionTest {
 	@Test
 	void testCall() {
 		try {
-
 			// model parameters
 
 			final double initialPrice = 100.0;
@@ -59,15 +58,15 @@ class GeneralOptionTest {
 			final double analyticValue = AnalyticFormulas.blackScholesOptionValue(initialPrice, riskFreeRate,
 					volatility, maturity, strike);
 
+			final AbstractAssetMonteCarloProduct ourOption = new GeneralOption(maturity, payoffFunction);
+			final AbstractAssetMonteCarloProduct europeanOption = new EuropeanOption(maturity, strike);
+
 			/*
 			 * Look at our scheme: MonteCarloBlackScholesModel extends MonteCarloAssetModel
 			 * which implements AssetModelMonteCarloSimulationModel
 			 */
 			final AssetModelMonteCarloSimulationModel bsModel = new MonteCarloBlackScholesModel(times,
 					numberOfSimulations, initialPrice, riskFreeRate, volatility);
-
-			final AbstractAssetMonteCarloProduct ourOption = new GeneralOption(maturity, payoffFunction);
-			final AbstractAssetMonteCarloProduct europeanOption = new EuropeanOption(maturity, strike);
 
 			final double valueWithGeneralOption = ourOption.getValue(bsModel);
 			final double valueWithSpecificEuropeanCall = europeanOption.getValue(bsModel);

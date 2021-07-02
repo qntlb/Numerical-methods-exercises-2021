@@ -39,7 +39,7 @@ public class ExchangeOptionTest {
 
 	private final double[] volatilities = { 0.25, 0.3 };
 
-	private final double riskFreeRate = 0;
+	private final double riskFreeRate = 0.2;
 
 	private double correlation = 0.3;
 	/*
@@ -77,8 +77,9 @@ public class ExchangeOptionTest {
 	private double computeAnalyticalValue() {
 		final double sigma = Math.sqrt(volatilities[0] * volatilities[0]
 				- 2 * volatilities[0] * volatilities[1] * correlation + volatilities[1] * volatilities[1]);
-		return AnalyticFormulas.blackScholesOptionValue(initialPrices[0], riskFreeRate, sigma, maturity,
-				initialPrices[1]);
+
+		// The interest rate must be zero, because we are discounting!
+		return AnalyticFormulas.blackScholesOptionValue(initialPrices[0], 0, sigma, maturity, initialPrices[1]);
 	}
 
 	/**
@@ -216,6 +217,13 @@ public class ExchangeOptionTest {
 
 				randomSeed = randomGenerator.nextInt();
 
+				// We could also do the following
+//				final BrownianMotion newBrownian = new BrownianMotionFromMersenneRandomNumbers(times, 2, numberOfSimulations,
+//						randomSeed/* the seed changes at every iterations */);
+//
+//				// the seed is "hidden" in the BrownianMotion object
+//				firstSimulationTwoDimGeometricBrownian = new MonteCarloMultiAssetBlackScholesModel(
+//						newBrownian, initialPrices, riskFreeRate, volatilities, correlationMatrix);
 				/*
 				 * get the price of your exchange option as above, now constructing your
 				 * MonteCarloMultiAssetBlackScholesModel with randomSeed.
@@ -234,13 +242,14 @@ public class ExchangeOptionTest {
 
 			}
 			final double ratioFailure = ((double) numberOfFailures) / numberOfRepetitions;
-			final double percentageSuccess = 1 - ratioFailure;
+			final double ratioSuccess = 1 - ratioFailure;
 			System.out.println("The percentage of times when the percentage error is smaller than "
-					+ percentageTolerance + " is " + formatterPercentage.format(percentageSuccess));
+					+ percentageTolerance + " is " + formatterPercentage.format(ratioSuccess));
 			System.out.println();
 			Assert.assertTrue(100 * ratioFailure < allowedFailurePercentage);
 		} catch (CalculationException e) {
 			Assert.fail();
 		}
 	}
+
 }
